@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Day 1: Employee Filter CLI Tool
+Day 2: Employee Filter CLI Tool with logging module
 Author: Sundarapandiyan — Week 1 Transition Plan
 """
 
@@ -8,9 +8,18 @@ import json
 import csv
 import time
 import argparse
+import logging
 from pathlib import Path
 from typing import List, Dict, Callable
 from functools import wraps
+
+# --- Logging Config ---
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+logger = logging.getLogger("employee_filter")
 
 # --- Decorator ---
 def log_execution(func: Callable) -> Callable:
@@ -18,10 +27,10 @@ def log_execution(func: Callable) -> Callable:
     @wraps(func)
     def wrapper(*args, **kwargs):
         start_time = time.perf_counter()
-        print(f"[LOG] Starting: {func.__name__}")
+        logger.debug(f"Starting: {func.__name__}")
         result = func(*args, **kwargs)
         elapsed = (time.perf_counter() - start_time) * 1000
-        print(f"[LOG] Finished: {func.__name__} in {elapsed:.2f} ms")
+        logger.debug(f"Finished: {func.__name__} in {elapsed:.2f} ms")
         return result
     return wrapper
 
@@ -41,7 +50,7 @@ def filter_by_salary(employees: List[Dict], threshold: int) -> List[Dict]:
 def save_to_csv(employees: List[Dict], file_path: Path) -> None:
     """Save employee data to a CSV file."""
     if not employees:
-        print("[WARN] No employees to save.")
+        logger.warning("No employees to save.")
         return
     with file_path.open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=employees[0].keys())
@@ -72,7 +81,7 @@ def main():
     employees = load_employees(args.input)
     high_salary_emps = filter_by_salary(employees, args.threshold)
     save_to_csv(high_salary_emps, args.output)
-    print(f"[INFO] Saved {len(high_salary_emps)} employees to {args.output}")
+    logger.info(f"Saved {len(high_salary_emps)} employees to {args.output}")
 
 if __name__ == "__main__":
     main()
