@@ -1,0 +1,84 @@
+Docker Build Setup for a FastAPI + AI Inference Service
+🎯 Learning Goals
+- Package a FastAPI app that serves real model inference
+- Create a Dockerfile for reproducible builds
+- Run the container locally and test the API
+
+
+Project Structure:
+
+project/
+│
+├── app/
+│   ├── main.py
+│   ├── inference.py
+│   └── requirements.txt
+│
+└── Dockerfile
+
+⃣Build & Run:
+
+# Build the image
+docker build -t ai-inference-api .
+
+# Run the container
+docker run -p 8000:8000 ai-inference-api
+
+Test the API:
+
+curl -X POST "http://localhost:8000/analyze" \
+     -H "Content-Type: application/json" \
+     -d '{"text": "I love Python for AI engineering!"}'
+
+Expected Output:
+JSON
+{
+  "input": "I love Python for AI engineering!",
+  "result": [{"label": "POSITIVE", "score": 0.9998}]
+}
+
+Stretch Goals
+- Add logging and request timing middleware
+- Parameterize model choice via environment variables
+- Multi‑stage Docker build for smaller image size
+- Integrate ONNX Runtime for faster inference
+
+we can extend this into:
+- Docker Compose with a DuckDB/Redis backend
+- Async request handling
+- Health checks & metrics endpoints
+
+Learning Goals
+- Orchestrate multiple services with Docker Compose
+- Add DuckDB for lightweight analytics storage
+- Add Redis for caching inference results
+- Implement async endpoints in FastAPI
+- Add /health and /metrics endpoints
+- Prepare for NPU‑accelerated inference (optional)
+
+Project Structure:
+
+project/
+│
+├── app/
+│   ├── main.py
+│   ├── inference.py
+│   ├── db.py
+│   ├── cache.py
+│   └── requirements.txt
+│
+├── docker-compose.yml
+└── Dockerfile
+
+Run and Test:
+
+# Build and start services
+docker-compose up --build
+
+# Test health
+curl http://localhost:8000/health
+
+# Test inference
+curl -X POST "http://localhost:8000/analyze" \
+     -H "Content-Type: application/json" \
+     -d '{"text": "FastAPI with Redis and DuckDB is awesome!"}'
