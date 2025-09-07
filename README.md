@@ -5,12 +5,12 @@ Python Version used: 3.13.6 <br/>
 
 ## Create a Virtual Environment
 
-python -m venv .study
+python -m venv .study <br/>
 
 ## Activate Virtual Environment
 
-Windows CMD: ...\pyworks_ghcp\.study\Scripts\Activate.ps1
-Linux / MacOSX: source ...\pyworks_ghcp\.study\Scripts\activate
+Windows CMD: ...\pyworks_ghcp\.study\Scripts\Activate.ps1 <br/>
+Linux / MacOSX: source ...\pyworks_ghcp\.study\Scripts\activate <br/>
 
 ## Dependencies:
 - pip install pytest 
