@@ -1,0 +1,37 @@
+Goals:
+- Extend the ETL CLI to include an optional AI step.
+- Use a small, CPU/NPU‑friendly model so you can run locally without a GPU.
+- Demonstrate post‑ETL inference on the processed data.
+- Keep the AI step modular so it can be swapped out later.
+
+Example Use Case — Role‑Based Salary Category Prediction
+We’ll:
+- Run ETL to get average salary by role.
+- Feed each role into a text classification model that predicts a salary category label:
+- "High" if avg salary > 150 K
+- "Medium" if 100 K–150 K
+- "Low" if < 100 K
+(We’ll simulate this with a small model for now — later you can replace it with a fine‑tuned one.)
+
+📦 Install Dependencies
+pip install transformers torch --upgrade
+
+
+(If you want NPU acceleration later, we can swap to onnxruntime.)
+
+
+🔹 How to Run
+ETL only (Pandas):
+python etl_ai_cli.py -i employees.csv -o avg_salary.csv -e pandas
+
+
+ETL + AI step (Polars):
+python etl_ai_cli.py -i employees.csv -o avg_salary_ai.csv -e polars --ai
+
+
+
+🚀 Why This Matters
+- You now have a data → AI pipeline in one CLI.
+- The AI step is modular — swap in any Hugging Face model (e.g., sentiment analysis, zero‑shot classification, embeddings).
+- This pattern scales to RAG pipelines and agent workflows — ETL prepares the data, AI consumes it.
+

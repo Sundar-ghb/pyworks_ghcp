@@ -1,0 +1,39 @@
+Goals
+- Wrap your ETL + AI logic in FastAPI endpoints.
+- Accept file uploads (CSV) and parameters (threshold, engine, AI flag).
+- Return processed results as a downloadable CSV or JSON.
+- Keep the ETL and AI code modular so it’s still testable.
+
+Dependencies:
+- pip install fastapi uvicorn
+- pip install python-multipart
+- pip install httpx
+
+
+How to Run the Service:
+
+
+- Start the server:
+uvicorn etl_ai_service:app --reload
+
+
+- Open the interactive docs:
+http://127.0.0.1:8000/docs
+
+
+
+🔹 Example Usage
+POST to /process with:
+- file: your CSV
+- threshold: e.g., 120000
+- engine: pandas or polars
+- ai: true or false
+- return_format: csv or json
+
+🚀 Why This Is a Big Step
+- You’ve gone from CLI tool → HTTP API.
+- This can now be:
+- Called from a frontend dashboard.
+- Integrated into a larger AI agent workflow.
+- Deployed to cloud (Azure App Service, AWS Lambda, etc.).
+- The ETL + AI logic is still modular and testable.
